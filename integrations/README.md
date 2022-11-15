@@ -117,47 +117,21 @@ To create incidents from events in the `sonargd-instance` collection, follow the
     - Group Label: `No`  
     - Playbook Execution: Check `Synchronous Execution`
     - Enter the following syntax into the text area:  
-
       ```
       {
         "start" : {
-          "run_type" : "row",
-          "row_run" : "<placeholder>",
-          "database_name" : "sonargd",
-          "collection_name" : "instance"
+          "event" : "$$data",
+          "comment" : null,
+          "asset_id" : "service_now"
         }
       }
       ```  
-  1. Navigate to Home->System Management->SonarK Management->Index Patterns.
-  1. Search for `instance`, and select the `sonargd-instance` collection.
-  1. Navigate to Actions->Row, anc click the pen icon to edit the `Create Snow Incident` action button.
-  1. Enter the following json syntax into the args text area, anc click `Save`:  
-      ```
-      {
-          "value": {
-              "start": {
-                  "run_type": "row",
-                  "row_run": [
-                      {
-                          "$match": {
-                              "_id": "$$ejsonData._id"
-                          }
-                      }
-                  ],
-                  "database_name": "sonargd",
-                  "collection_name": "instance"
-              }
-          },
-          "synchronous": true
-      }
-      ```
-
+  1. Navigate to Home->Discover, select the sonargd-instance collection, and click `Create SNOW Incident`.  Enter a comment and click submit.
 
 ## Create incidents from events the `sonargd-session` collection  
 To create incidents from events in the `sonargd-session` collection, follow the following steps:
   1. Navigate to Home->Playbooks->Published Playbooks.
   1. Select the `All Categories` dropdown, and select the `ServiceNow Incident` category filter.
-  1. Navigate to Home->System Management->SonarK Management->Index Patterns.
   1. On the `Create SNOW Incident Record` playbook, click Options->Create SonarK Button, and enter the following:   
     - Select an Index Pattern: `sonargd-session`  
     - Location: `ROW`  
@@ -165,58 +139,15 @@ To create incidents from events in the `sonargd-session` collection, follow the 
     - Group Label: `No`  
     - Playbook Execution: Check `Synchronous Execution`
     - Enter the following syntax into the text area:  
-
       ```
       {
         "start" : {
-          "run_type" : "row",
-          "row_run" : "<placeholder>",
-          "database_name" : "sonargd",
-          "collection_name" : "instance"
+          "event" : "$$data",
+          "comment" : null,
+          "asset_id" : "service_now"
         }
       }
       ```  
-  1. Navigate to Home->System Management->SonarK Management->Index Patterns.
-  1. Search for `session`, and select the `sonargd-session` collection.
-  1. Navigate to Scripted Fields, and click `Add scripted field` and add the following and click Save:
-    - Name: `id_string`  
-    - Language: `sonar`    
-    - Type: `string`  
-    - Format: `string`  
-    - Popularity: LEAVE BLANK  
-    - Script:  
-      ```
-      { "$toString" : "$_id" }
-      ```
-  1. Navigate to Actions->Row, anc click the pen icon to edit the `Create Snow Incident` action button.
-  1. Enter the following json syntax into the args text area, anc click `Save`:  
-      ```
-      {
-          "value": {
-              "start": {
-                  "run_type": "row",
-                  "row_run": [
-                      {
-                          "$match": {
-                              "$expr": {
-                                  "$eq": [
-                                      {
-                                          "$toString": "$_id"
-                                      },
-                                      "$$data.id_string"
-                                  ]
-                              }
-                          }
-                      }
-                  ],
-                  "database_name": "sonargd",
-                  "collection_name": "session"
-              }
-          },
-          "synchronous": true
-      }
-      ```
-  1. Navigate to Home->Discover, select the sonargd-instance collection, and click `Create SNOW Incident`.  Enter a comment and click submit.
   1. Navigate to Home->Discover, select the sonargd-session collection, and click `Create SNOW Incident`.  Enter a comment and click submit.
 
 ## Contributing
