@@ -43,11 +43,3 @@ variable dsf_iam_profile_name {
   default = null
   description = "DSF base ec2 IAM instance profile"
 }
-
-variable "dsf_base_amis_id" {
-  type = map(any)
-  default = {
-    us-east-1 = "ami-064196ba51ee65773"
-    eu-west-2 = "ami-03a6c38b3c0aa74f9"
-  }
-}
