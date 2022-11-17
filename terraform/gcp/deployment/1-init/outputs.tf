@@ -1,0 +1,11 @@
+output "region" { value = var.region }
+output "environment" { value = var.environment }
+output "key_pair_pem_local_path" { value = var.key_pair_pem_local_path }
+output "gcp_bucket_name" { value = var.gcp_bucket_name }
+output "dsf_hub_sonarw_private_ssh_key_name" { value = "${var.environment}/dsf_hub_federation_private_key" }
+output "dsf_hub_sonarw_public_ssh_key_name" { value = "${var.environment}/dsf_hub_federation_public_key" }
+output "dsf_gateway_sonarw_private_ssh_key_name" { value = "${var.environment}/dsf_gateway_federation_private_key" }
+output "dsf_gateway_sonarw_public_ssh_key_name" { value = "${var.environment}/dsf_gateway_federation_public_key" }
+output "dsf_passwords_secret_name" { value = "${var.environment}_dsf_passwords" }
+output "dsf_passwords_secret_id" { value = resource.google_secret_manager_secret.dsf_passwords.id }
+output "service_account_id" { value = var.service_account_id }
