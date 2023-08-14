@@ -1,0 +1,223 @@
+{
+    "disk": {
+        "/sys": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/proc": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/dev": {
+            "disk_capacity": 16099100,
+            "disk_used": 0,
+            "disk_available": 16099100
+        },
+        "/sys/kernel/security": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/dev/shm": {
+            "disk_capacity": 16123888,
+            "disk_used": 12,
+            "disk_available": 16123876
+        },
+        "/dev/pts": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/run": {
+            "disk_capacity": 16123888,
+            "disk_used": 17116,
+            "disk_available": 16106772
+        },
+        "/sys/fs/cgroup": {
+            "disk_capacity": 16123888,
+            "disk_used": 0,
+            "disk_available": 16123888
+        },
+        "/sys/fs/cgroup/systemd": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/sys/fs/pstore": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/sys/fs/cgroup/pids": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/sys/fs/cgroup/cpuset": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/sys/fs/cgroup/memory": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/sys/fs/cgroup/devices": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/sys/fs/cgroup/hugetlb": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/sys/fs/cgroup/cpu,cpuacct": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/sys/fs/cgroup/net_cls,net_prio": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/sys/fs/cgroup/freezer": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/sys/fs/cgroup/blkio": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/sys/fs/cgroup/perf_event": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/sys/kernel/config": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/": {
+            "disk_capacity": 104845292,
+            "disk_used": 19247788,
+            "disk_available": 85597504
+        },
+        "/sys/fs/selinux": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/proc/sys/fs/binfmt_misc": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/dev/mqueue": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/dev/hugepages": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/sys/kernel/debug": {
+            "disk_capacity": 0,
+            "disk_used": 0,
+            "disk_available": 0
+        },
+        "/run/user/0": {
+            "disk_capacity": 3224780,
+            "disk_used": 0,
+            "disk_available": 3224780
+        },
+        "/run/user/1000": {
+            "disk_capacity": 3224780,
+            "disk_used": 0,
+            "disk_available": 3224780
+        }
+    },
+    "system": {
+        "uptime": "4453",
+        "sar": {
+            "all": {
+                "user": "26.01",
+                "nice": "0.00",
+                "system": "9.85",
+                "iowait": "0.00",
+                "steal": "0.00",
+                "idle": "64.14"
+            },
+            "0": {
+                "user": "51.00",
+                "nice": "0.00",
+                "system": "8.00",
+                "iowait": "0.00",
+                "steal": "0.00",
+                "idle": "41.00"
+            },
+            "1": {
+                "user": "2.02",
+                "nice": "0.00",
+                "system": "10.10",
+                "iowait": "0.00",
+                "steal": "0.00",
+                "idle": "87.88"
+            },
+            "2": {
+                "user": "4.08",
+                "nice": "0.00",
+                "system": "8.16",
+                "iowait": "0.00",
+                "steal": "0.00",
+                "idle": "87.76"
+            },
+            "3": {
+                "user": "46.00",
+                "nice": "0.00",
+                "system": "12.00",
+                "iowait": "0.00",
+                "steal": "0.00",
+                "idle": "42.00"
+            }
+        }
+    },
+    "network": {
+        "eth0": {
+            "ipaddress": "172.31.78.234",
+            "rx_fifo_errors": 0,
+            "collisions": 0,
+            "rx_errors": 0,
+            "rx_nohandler": 0,
+            "rx_compressed": 0,
+            "rx_dropped": 0,
+            "tx_packets": 162180,
+            "tx_errors": 0,
+            "rx_missed_errors": 0,
+            "rx_over_errors": 0,
+            "tx_carrier_errors": 0,
+            "tx_heartbeat_errors": 0,
+            "rx_crc_errors": 0,
+            "multicast": 0,
+            "tx_fifo_errors": 0,
+            "tx_aborted_errors": 0,
+            "rx_bytes": 3127505772,
+            "tx_compressed": 0,
+            "tx_dropped": 0,
+            "rx_packets": 468569,
+            "tx_bytes": 18914903,
+            "tx_window_errors": 0,
+            "rx_frame_errors": 0,
+            "rx_length_errors": 0
+        }
+    }
+}

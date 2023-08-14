@@ -31,14 +31,61 @@ Download the latest files from the performance-monitoring/agentless_gateway fold
       `tcp  0 0 0.0.0.0:10667  0.0.0.0:* LISTEN`  
       `tcp6 0 0 :::10667 :::* LISTEN`  
 
-1. Create the `soargd.imperva_perf_stats`collection on the Hub  
+1. Create the `soargd.imperva_perf_stats` collection, and define it as an "ingested" collection on the Hub:  
     - SSH into the Hub/Warehouose, and export environment variables:
-        >`export $(cat /etc/sysconfig/jsonar)`
+        >`export $(cat /etc/sysconfig/jsonar)`  
+    
+    - Cat the contents of the default system sonargd.conf file, and copy the `ingest-buffer` section.  
+
+        >`cat ${JSONAR_BASEDIR}/etc/sonar/sonargd.conf`  
+
+        <pre>ingest-buffer:
+            exception: 1
+            instance: 1
+            full_sql: 4
+            stap_status: 1
+            session: 1
+            policy_violations: 1
+            buff_usage: 1
+            datasources: 1
+            dm_extraction_log: 1
+            system_info: 1
+            classifier: 1
+            va: 1
+            user_info: 1
+            malformed_logs: 1
+            user_info: 1</pre>
+        
+    - Add the copied `ingest-buffer` section to the end of the `${JSONAR_LOCALDIR}/sonargd/sonargd.conf` file adding and enabling the imperva_perf_stats collection to be ingtested, then restart the sonargd service
+        >`vi ${JSONAR_LOCALDIR}/sonargd/sonargd.conf`  
+
+        <pre>ingest-buffer:
+            exception: 1
+            instance: 1
+            full_sql: 4
+            stap_status: 1
+            session: 1
+            policy_violations: 1
+            buff_usage: 1
+            datasources: 1
+            dm_extraction_log: 1
+            system_info: 1
+            classifier: 1
+            va: 1
+            user_info: 1
+            malformed_logs: 1
+            user_info: 1
+            imperva_perf_stats: 1</pre>
+
+    - Restart the `sonarrsyslog` service to load the new configuration:  
+      >`sudo systemctl restart sonargd`  
+
     - Log into Mongo, and create the `soargd.imperva_perf_stats` collection on the warehouse:
         >`${JSONAR_BASEDIR}/bin/mongo --port 27117  -u admin -p`  
         [enter sonar admin password when prompted]  
         >`use sonargd`  
         >`db.createCollection("imperva_perf_stats")`      
+    
 
 1. Setting up Agentless Gateway performance monitoring:
     - SSH into the Hub/Warehouose, and watch the incoming folder monitoring for new incoming warehouse part files:  

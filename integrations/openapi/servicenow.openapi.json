@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "{url}/api/now",
+            "url": "{url}/api",
             "description": "",
             "variables": {
                 "url": {
@@ -18,7 +18,7 @@
         }
     ],
     "paths": {
-        "/table/{tableName}": {
+        "/now/table/{tableName}": {
             "get": {
                 "summary": "Retrieves multiple records for the specified table.",
                 "description": "",
@@ -141,6 +141,176 @@
                     "required": false
                 },
                 "operationId": "create_record",
+                "responses": {
+                    "200": {
+                        "description": "Request completed successfully"
+                    }
+                },
+                "tags": [
+                    "ServiceNow",
+                    "Table"
+                ]
+            }
+        },
+        "/{apiEndpointUrl}": {
+            "get": {
+                "summary": "Get records",
+                "description": "Get records",
+                "externalDocs": {
+                    "url": "https://developer.servicenow.com/dev.do#!/reference/api/sandiego/rest/c_TableAPI#table-POST"
+                },
+                "parameters": [
+                    {
+                        "name": "apiEndpointUrl",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The url of the API endpoint you are lookinig to call after the /api prefix. Example: https://demo.servicenow.com/api/{apiEndpointUrl}"
+                    },
+                    {
+                        "name": "BasicAuth",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The asset_id of the connection that matches type:OPENAPI and auth_mechanism:basic"
+                    }
+                ],
+                "operationId": "get_records",
+                "responses": {
+                    "200": {
+                        "description": "Request completed successfully"
+                    }
+                },
+                "tags": [
+                    "ServiceNow",
+                    "Table"
+                ]
+            },
+            "post": {
+                "summary": "Create single record",
+                "description": "Create single record",
+                "externalDocs": {
+                    "url": "https://developer.servicenow.com/dev.do#!/reference/api/sandiego/rest/c_TableAPI#table-POST"
+                },
+                "parameters": [
+                    {
+                        "name": "apiEndpointUrl",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The url of the API endpoint you are lookinig to call after the /api prefix. Example: https://demo.servicenow.com/api/{apiEndpointUrl}"
+                    },
+                    {
+                        "name": "BasicAuth",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The asset_id of the connection that matches type:OPENAPI and auth_mechanism:basic"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ObjectDTO"
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "operationId": "create_record",
+                "responses": {
+                    "200": {
+                        "description": "Request completed successfully"
+                    }
+                },
+                "tags": [
+                    "ServiceNow",
+                    "Table"
+                ]
+            },
+            "put": {
+                "summary": "Update single record",
+                "description": "Update single record",
+                "externalDocs": {
+                    "url": "https://developer.servicenow.com/dev.do#!/reference/api/sandiego/rest/c_TableAPI#table-POST"
+                },
+                "parameters": [
+                    {
+                        "name": "apiEndpointUrl",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The url of the API endpoint you are lookinig to call after the /api prefix. Example: https://demo.servicenow.com/api/{apiEndpointUrl}"
+                    },
+                    {
+                        "name": "BasicAuth",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The asset_id of the connection that matches type:OPENAPI and auth_mechanism:basic"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ObjectDTO"
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "operationId": "update_record",
+                "responses": {
+                    "200": {
+                        "description": "Request completed successfully"
+                    }
+                },
+                "tags": [
+                    "ServiceNow",
+                    "Table"
+                ]
+            },
+            "delete": {
+                "summary": "Delete record",
+                "description": "Delete record",
+                "externalDocs": {
+                    "url": "https://developer.servicenow.com/dev.do#!/reference/api/sandiego/rest/c_TableAPI#table-POST"
+                },
+                "parameters": [
+                    {
+                        "name": "apiEndpointUrl",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The url of the API endpoint you are lookinig to call after the /api prefix. Example: https://demo.servicenow.com/api/{apiEndpointUrl}"
+                    },
+                    {
+                        "name": "BasicAuth",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The asset_id of the connection that matches type:OPENAPI and auth_mechanism:basic"
+                    }
+                ],
+                "operationId": "delete_record",
                 "responses": {
                     "200": {
                         "description": "Request completed successfully"
