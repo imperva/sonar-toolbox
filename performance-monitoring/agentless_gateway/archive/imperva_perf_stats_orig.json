@@ -1,0 +1,245 @@
+[
+  {
+    "global_settings": {
+      "batch_settings": {
+        "max_batch_size": 268435456,
+        "max_batch_time_sec": 300,
+        "batch_enabled": false
+      },
+      "target_db": "sonargd",
+      "collect_unmatched_fields": true,
+      "redact_unmatched_fields": false,
+      "statistics": {
+        "vendor": "IMPERVA",
+        "service": "SeS"
+      },
+      "malformed_collection": {
+        "db_name": "sonargd",
+        "coll_name": "malformed_logs"
+      }
+    }
+  },
+  {
+    "global_field_translations": {
+      "Gateway Event Time": {
+        "generate": true,
+        "$expr": "$now"
+      },
+      "MX Name": {
+        "$expr": {
+          "$cond": [
+            {
+              "$ne": [
+                "$mx",
+                ""
+              ]
+            },
+            {
+              "$toUpper": "$mx"
+            },
+            ""  
+          ]
+        }
+      },
+      "Gateway Name": {
+        "$expr": {
+          "$cond": [
+            {
+              "$ne": [
+                "$gw",
+                ""
+              ]
+            },
+            {
+              "$toUpper": "$gw"
+            },
+            ""
+          ]
+        }
+      },
+      "Server Group Name": {
+        "$expr": {
+          "$cond": [
+            {
+              "$ne": [
+                "$server_group",
+                ""
+              ]
+            },
+            {
+              "$toUpper": "$server_group"
+            },
+            ""
+          ]
+        }
+      },
+      "Agent Name": {
+        "$expr": {
+          "$cond": [
+            {
+              "$ne": [
+                "$agent_name",
+                 ""
+              ]
+            },
+            {
+              "$toUpper": "$agent_name"
+            },
+            ""
+          ]
+        }
+      },
+      "Host": {
+        "generate": true,
+        "$expr": "$fromhost"
+      },
+      "Type": {
+        "generate": true,
+        "$expr": {
+          "$toUpper": "$event_type"
+        }
+      },
+      "cpu.top.system.used_pct": {
+        "generate": true,
+        "type": 1,
+        "$expr": {
+          "$round": {
+            "$multiply": [
+              {
+                "$divide": [      
+                  "$cpu.top.system.used",
+                  100
+                ]
+              },
+              100
+            ]
+          }
+        }
+      },
+      "memory.mem.pct": {
+        "generate": true,
+        "type": 1,
+        "$expr": {
+          "$round": {
+            "$multiply": [
+              {
+                "$divide": [
+                   "$memory.mem.used",
+                   "$memory.mem.total"
+                ]
+              },
+              100
+            ]
+          }
+        }
+      },
+      "memory.swap.pct": {
+        "generate": true,
+        "type": 1,
+        "$expr": {
+          "$round": {
+            "$multiply": [
+              {
+                "$divide": [
+                   "$memory.swap.used",
+                   "$memory.swap.total"
+                ]
+              },
+              100
+            ]
+          }
+        }
+      },
+      "disk./.disk_pct": {
+        "generate": true,
+        "type": 1,
+        "$expr": {
+          "$round": {
+            "$multiply": [
+              {
+                "$divide": [
+                  "$disk./.disk_used",
+                  "$disk./.disk_capacity"
+                ]
+              },
+              100
+            ]
+          }
+        }
+      },
+      "disk./boot.disk_pct": {
+        "generate": true,
+        "type": 1,
+        "$expr": {
+          "$round": {
+            "$multiply": [
+              {
+                "$divide": [
+                  "$disk./boot.disk_used",
+                  "$disk./boot.disk_capacity"
+                ]
+              },
+              100
+            ]
+          }
+        }
+      },
+      "disk./var.disk_pct": {
+        "generate": true,
+        "type": 1,
+        "$expr": {
+          "$round": {
+            "$multiply": [
+              {
+                "$divide": [
+                  "$disk./var.disk_used",
+                  "$disk./var.disk_capacity"
+                ]
+              },
+              100
+            ]
+          }
+        }
+      },
+      "disk./var/log/audit.disk_pct": {
+        "generate": true,
+        "type": 1,
+        "$expr": {
+          "$round": {
+            "$multiply": [
+              {
+                "$divide": [
+                  "$disk./var/log/audit.disk_used",
+                  "$disk./var/log/audit.disk_capacity"
+                ]
+              },
+              100
+            ]
+          }
+        }
+      },            
+      "system.uptime_in_days": {
+        "generate": true,
+        "type": 1,
+        "$expr": {
+          "$round": {
+            "$divide": [
+              "$system.uptime",
+              86400
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "output_connection": {
+      "group_label": "imperva_ses_perf_stats",
+      "unique_label": "imperva_ses_perf_stats",
+      "default_collection": "imperva_ses_perf_stats",
+      "event_format": {
+        "standard": "JSON"
+      }
+    }
+  }
+]
