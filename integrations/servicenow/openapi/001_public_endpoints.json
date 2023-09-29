@@ -1,0 +1,42 @@
+[
+  {
+    "_id": 1,
+    "service_path_regex": "+/playbook-runner/playbook-engine/playbooks/(?<grantOption>*)/run*",
+    "grant": "playbooks:run"
+  },
+  {
+    "_id": 2,
+    "service_path_regex": "+/playbook-runner/playbook-engine/playbooks/(?<grantOption>*)/params*",
+    "grant": "playbooks:run"
+  },
+  {
+    "_id": 3,
+    "service_path_regex": "+/ueba-main-service/include",
+    "grant": "ueba:access"
+  },
+  {
+    "_id": 4,
+    "service_path_regex": "+/playbook-runner/playbook-engine/playbooks*",
+    "grant": "playbooks:run"
+  },
+  {
+    "_id": 5,
+    "service_path_regex": "+/playbook-runner/playbook-engine/playbooks/(?<grantOption>*)*",
+    "grant": "playbooks:run"
+  },
+  {
+    "_id": "sdm-process",
+    "service_path_regex": "+/sensitive-data-management/process*",
+    "grant": "api:service:view"
+  },
+  {
+    "_id": "sdm-integration",
+    "service_path_regex": "+/sensitive-data-management/integrate*",
+    "grant": "api:service:view"
+  },
+  {
+    "_id": "remote-action-center",
+    "service_path_regex": "+/action-center-service/action-center/actions/*/run*",
+    "grant": "playbooks:run-remote-action"
+  }
+]
