@@ -1,0 +1,67 @@
+[
+{
+  "_id" : "4f5d4479-2a81-4929-9200-f4c5d283afce",
+  "name" : "Create BigPanda Alert",
+  "description" : "",
+  "type" : "playbook",
+  "category" : "BigPanda Alert",
+  "version" : 0,
+  "enabled" : true,
+  "onlyWarehouse" : false,
+  "created" : {
+    "$date" : "2023-09-29T17:49:09.811Z"
+  },
+  "playbook" : {
+    "_id" : "bc366d96-3aa7-45d4-951b-95167980fbcc",
+    "name" : "Create BigPanda Alert",
+    "description" : "",
+    "type" : "playbook",
+    "category" : "BigPanda Alert",
+    "version" : 0,
+    "enabled" : true,
+    "onlyWarehouse" : false,
+    "created" : {
+      "$date" : "2023-09-29T17:37:28.547Z"
+    }
+  }
+},
+{
+  "_id" : "2e725790-172e-4707-971f-1d90c0c3657f",
+  "name" : "Start",
+  "shortname" : "start",
+  "type" : "root_node",
+  "playbook" : "4f5d4479-2a81-4929-9200-f4c5d283afce",
+  "errorStatus" : "fail",
+  "children" : ["f7f39c8d-3bc2-46d2-a622-148d78d942f7"]
+},
+{
+  "_id" : "f7f39c8d-3bc2-46d2-a622-148d78d942f7",
+  "name" : "Create JSON Payload",
+  "shortname" : "payload",
+  "type" : "stamp_node",
+  "playbook" : "4f5d4479-2a81-4929-9200-f4c5d283afce",
+  "errorStatus" : "fail",
+  "result" : "{ \"schema\" : { \"type\" : \"object\" }, \"sensitive\" : false, \"expression\" : \"{ \\\"alerts\\\" : [{ \\\"event_severity\\\" : \\\"ERROR\\\", \\\"event_name\\\" : \\\"YOUR-EVENT-NAME-HERE\\\", \\\"event_description\\\" : \\\"Your description here\\\", \\\"event_source\\\" : \\\"abc\\\", \\\"event_unique_key\\\" : \\\"abcde12345\\\", \\\"sn_category\\\" : \\\"Technology Faults\\\", \\\"sn_subcategory\\\" : \\\"Major Alert/Alarm\\\", \\\"event_target_ticket\\\" : \\\"supported by\\\", \\\"event_target_page\\\" : \\\"managed by\\\", \\\"event_target_automation\\\" : \\\"YOUR_JOB_NAME_HERE\\\", \\\"event_governance\\\" : \\\"0\\\", \\\"ci_name\\\" : \\\"YOURCINAMEHERE\\\", \\\"ci_basic_type\\\" : \\\"application\\\", \\\"ci_wf_appid\\\" : \\\"APP-ID\\\", \\\"ci_environment\\\" : \\\"DEV\\\" }] }\" }",
+  "children" : ["06b54191-af1b-4a2d-8c61-01607efc3e55"],
+  "stamp" : "fail",
+  "message" : ""
+},
+{
+  "_id" : "06b54191-af1b-4a2d-8c61-01607efc3e55",
+  "name" : "Create Alert",
+  "shortname" : "create_alert",
+  "type" : "action_node",
+  "playbook" : "4f5d4479-2a81-4929-9200-f4c5d283afce",
+  "errorStatus" : "fail",
+  "arguments" : "{ \"url\" : { \"inputType\" : \"literal\", \"schema\" : { \"type\" : \"string\", \"description\" : \"{url}/api/v2 - will be overwritten with asset_id connection 'url' field\", \"default\" : \"https://your.bigpanda.com\", \"extensions\" : { \"in\" : \"server\" } }, \"required\" : true, \"sensitive\" : false, \"value\" : \"\\\"<asset_url>\\\"\" }, \"requestBody\" : { \"inputType\" : \"bind\", \"schema\" : { \"extensions\" : { \"in\" : \"body\", \"mediaType\" : \"application/json\" } }, \"required\" : false, \"sensitive\" : false, \"runAsProject\" : false, \"expression\" : \"\\\"$payload.result\\\"\" }, \"BasicAuth\" : { \"inputType\" : \"literal\", \"schema\" : { \"type\" : \"string\", \"description\" : \"The asset_id of the connection that matches type:OPENAPI and auth_mechanism:basic\", \"extensions\" : { \"in\" : \"header\" } }, \"required\" : true, \"sensitive\" : false, \"value\" : \"\\\"big_panda\\\"\" } }",
+  "children" : ["3d8206c0-244a-440e-9bf2-e130673272f7"],
+  "action" : "big_panda:create_alert",
+  "asynchronous" : false
+},
+{
+  "_id" : "3d8206c0-244a-440e-9bf2-e130673272f7",
+  "name" : "Untitled End",
+  "shortname" : "end",
+  "type" : "end_node",
+  "playbook" : "4f5d4479-2a81-4929-9200-f4c5d283afce"
+}]
