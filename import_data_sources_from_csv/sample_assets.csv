@@ -1,3 +1,3 @@
 ﻿asset_id,jsonar_uid,asset_display_name,Server Type,Server IP,Server Host Name,Service Name,Server Port,version,audit_type,auth_mechanism,username,password,reason,admin_email
-my.hostname1:ORACLE:ORA19C:1521,e33bfbe4-a93a-c4e5-8e9c-6e5558c2e2cd,my.hostname1:ORACLE:ORA19C:1521,ORACLE,0.0.0.0,my.hostname1:ORACLE:ORA19C:1521,my-ora-service-name,3202,19,UNIFIED,kerberos,,,sonargateway,your@email.com
-my.hostname2:ORACLE:ORA19C:1521,e33bfbe4-a93a-c4e5-8e9c-6e5558c2e2cd,my.hostname2:ORACLE:ORA19C:1521,ORACLE,0.0.0.0,my.hostname2:ORACLE:ORA19C:1521,my-ora-service-name,3202,19,UNIFIED,password,admin,password,sonargateway,your@email.com
+my.hostname1:ORACLE:ORA19C:1521,ABCDE-12345-ABCDE-12345,my.hostname1:ORACLE:ORA19C:1521,ORACLE,0.0.0.0,my.hostname1:ORACLE:ORA19C:1521,my-ora-service-name,3202,19,UNIFIED,kerberos,,,sonargateway,your@email.com
+my.hostname2:ORACLE:ORA19C:1521,ABCDE-12345-ABCDE-12345,my.hostname2:ORACLE:ORA19C:1521,ORACLE,0.0.0.0,my.hostname2:ORACLE:ORA19C:1521,my-ora-service-name,3202,19,UNIFIED,password,admin,password,sonargateway,your@email.com
