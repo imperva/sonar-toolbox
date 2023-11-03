@@ -24,7 +24,7 @@ export IMPV_DSF_TOKEN="abcdef-12345-abcd-12345-abcdef"
 - `logging.basicConfig.level` ([Logging Level](https://docs.python.org/3/library/logging.html#levels)) Logging level of the script.  Defaults to: `logging.INFO`. (Line 20 in import_data_sources_from_csv.py)
 
 ## Required CSV Columns:
-Download the [sample_assets.csv](https://github.com/imperva/sonar-toolbox/blob/main/import_data_sources_from_csv/README.md) example for reference:
+Download the [sample_assets.csv](https://github.com/imperva/sonar-toolbox/blob/main/import_data_sources_from_csv/sample_assets.csv) example for reference:
 
 - `asset_display_name` - (String) User-friendly name of the asset, defined by user.
 - `asset_id` - (String) The unique identifier or resource name of the asset. For most assets this should be a concatenation of `Server Host Name + Server Type + Service Name + Server Port` with “:” (colon) as separator, example: `mydbhost:mysql:my-db-service-name:3306`. For AWS data stores, this value will be the arn. For Azure data stores, the recommended format is `/subscriptions/my-subscription-id/resourceGroups/my-resource-group/`.
