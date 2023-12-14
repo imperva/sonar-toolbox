@@ -1,79 +1,79 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "title": "BigPanda",
-        "version": "1.0.0",
-        "contact": {}
-    },
-    "servers": [
-        {
-            "url": "{url}/api",
-            "description": "",
-            "variables": {
-                "url": {
-                    "description": "{url}/api/v2 - will be overwritten with asset_id connection 'url' field",
-                    "default": "https://your.bigpanda.com"
-                }
-            }
-        }
-    ],
-    "paths": {
-        "/api/v2/alert": {
-            "post": {
-                "summary": "Create single record",
-                "description": "Create single record",
-                "externalDocs": {
-                    "url": "https://docs.bigpanda.io/reference/alerts"
-                },
-                "parameters": [
-                    {
-                        "name": "BasicAuth",
-                        "in": "header",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "The asset_id of the connection that matches type:OPENAPI and auth_mechanism:basic"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ObjectDTO"
-                            }
-                        }
-                    },
-                    "required": false
-                },
-                "operationId": "create_alert",
-                "responses": {
-                    "200": {
-                        "description": "Request completed successfully"
-                    }
-                },
-                "tags": [
-                    "BigPanda",
-                    "Alert"
-                ]
-            }
-        }
-    },
-    "components": {
-        "links": {},
-        "callbacks": {},
-        "schemas": {},
-        "securitySchemes": {
-            "BasicAuth": {
-                "type": "http",
-                "scheme": "basic"
-            }
-        }
-    },
-    "tags": [],
-    "security": [
-        {
-            "BasicAuth": []
-        }
-    ]
+	"openapi": "3.0.0",
+	"info": {
+		"title": "BigPanda",
+		"version": "1.0.0",
+		"contact": {}
+	},
+	"servers": [
+		{
+			"url": "{url}/api",
+			"description": "",
+			"variables": {
+				"url": {
+					"description": "{url}/api/v2 - will be overwritten with asset_id connection 'url' field",
+					"default": "https://your.bigpanda.com"
+				}
+			}
+		}
+	],
+	"paths": {
+		"/api/v2/alert": {
+			"post": {
+				"summary": "Create single record",
+				"description": "Create single record",
+				"externalDocs": {
+					"url": "https://docs.bigpanda.io/reference/alerts"
+				},
+				"parameters": [
+					{
+						"name": "BasicAuth",
+						"in": "header",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The asset_id of the connection that matches type:OPENAPI and auth_mechanism:basic"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ObjectDTO"
+							}
+						}
+					},
+					"required": false
+				},
+				"operationId": "create_alert",
+				"responses": {
+					"200": {
+						"description": "Request completed successfully"
+					}
+				},
+				"tags": [
+					"BigPanda",
+					"Alert"
+				]
+			}
+		}
+	},
+	"components": {
+		"links": {},
+		"callbacks": {},
+		"schemas": {},
+		"securitySchemes": {
+			"BasicAuth": {
+				"type": "http",
+				"scheme": "basic"
+			}
+		}
+	},
+	"tags": [],
+	"security": [
+		{
+			"BasicAuth": []
+		}
+	]
 }
