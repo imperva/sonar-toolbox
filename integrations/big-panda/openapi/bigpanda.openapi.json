@@ -8,7 +8,7 @@
 	"servers": [
 		{
 			"url": "{url}/api",
-			"description": "",
+			"description": "", 
 			"variables": {
 				"url": {
 					"description": "{url}/api/v2 - will be overwritten with asset_id connection 'url' field",
