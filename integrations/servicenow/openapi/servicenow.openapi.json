@@ -133,15 +133,15 @@
                 "requestBody": {
                     "content": {
                         "application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"mapping": {
-										"type": "object"
-									}
-								}
-							}
-						}
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "mapping": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "required": false
                 },
@@ -224,10 +224,15 @@
                 "requestBody": {
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ObjectDTO"
-                            }
-                        }
+							"schema": {
+								"type": "object",
+								"properties": {
+									"mapping": {
+										"type": "object"
+									}
+								}
+							}
+						}
                     },
                     "required": false
                 },
@@ -271,10 +276,15 @@
                 "requestBody": {
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ObjectDTO"
-                            }
-                        }
+							"schema": {
+								"type": "object",
+								"properties": {
+									"mapping": {
+										"type": "object"
+									}
+								}
+							}
+						}
                     },
                     "required": false
                 },
