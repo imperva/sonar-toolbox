@@ -1,6 +1,6 @@
 # Data Source Import from CSV
 
-This project provides resources to bulk import data_source records into the DSFHUB via the [DSF Open API](https://docs.imperva.com/bundle/v4.13-sonar-user-guide/page/84552.htm).
+This project provides resources to bulk import and delete data_source records into the DSFHUB via the [DSF Open API](https://docs.imperva.com/bundle/v4.13-sonar-user-guide/page/84552.htm).
 
 ## Authentication - Setting up the required environment variables:
 Set [environment variables](https://en.wikipedia.org/wiki/Environment_variable) to configure a token for authentication, and the specific hub endpoint, example:  
@@ -12,10 +12,20 @@ export IMPV_DSF_TOKEN="abcdef-12345-abcd-12345-abcdef"
 
 [CLICK HERE](https://docs.imperva.com/bundle/v4.13-sonar-user-guide/page/84555.htm) to see how create a token to authenticate.
 
-## Usage:
+## Bulk Delete Usage:
+`python delete_data_source_from_csv.py "path/to/my/csv/data.csv"`
+
+## Bulk Delete Argument Reference
+
+- `IMPV_DSF_HOST` (String) The host of the DSF HUB system to upload data sources to, example: `"https://1.2.3.4:8443"`  
+- `IMPV_DSF_TOKEN` (String) The bearer token used to authenticate to the DSF HUB API, example: `"abcdef-12345-abcd-12345-abcdef"`  
+- `CSV_FILE_PATH` (String) Path to the csv file to bulk import as command line argument. Example: `"/path/to/my/csv/data_sources.csv"`
+- `logging.basicConfig.level` ([Logging Level](https://docs.python.org/3/library/logging.html#levels)) Logging level of the script.  Defaults to: `logging.INFO`. (Line 20 in import_data_sources_from_csv.py)
+
+## Bulk Import Usage:
 `python import_data_source_from_csv.py "path/to/my/csv/data.csv"`
 
-## Argument Reference
+## Bulk Import Argument Reference
 
 - `IMPV_DSF_HOST` (String) The host of the DSF HUB system to upload data sources to, example: `"https://1.2.3.4:8443"`  
 - `IMPV_DSF_TOKEN` (String) The bearer token used to authenticate to the DSF HUB API, example: `"abcdef-12345-abcd-12345-abcdef"`  
