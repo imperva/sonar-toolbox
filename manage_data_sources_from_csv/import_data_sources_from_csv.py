@@ -1,3 +1,9 @@
+"""
+Author: Brian Anderson
+Script Version: 1.1
+Description: Library for bulk importing of dsf assets from a csv file
+"""
+
 #!/usr/bin/env python
 #/imperva/apps/jsonar/apps/4.x.x/bin/python3
 import os
@@ -44,6 +50,9 @@ def run():
 	records = dsflib.parseCsv(CSV_FILE_PATH)
 	logging.info("Processing CSV records: "+CSV_FILE_PATH+"\n")
 	for record in records:
+		if "errors" in record:
+			failedRecords.append(record)
+			continue
 		# response = dsflib.makeCall(DSF_HOST + "/dsf/api/v1/data-sources", DSF_TOKEN, "GET")
 		logging.info("Creating record with asset_id '"+record["data"]["assetData"]["asset_id"]+"'\n")
 		response = dsflib.makeCall(DSF_HOST + "/dsf/api/v1/data-sources", DSF_TOKEN, "POST", json.dumps(record))
@@ -62,7 +71,7 @@ def run():
 				logging.error("[DEBUG] Malformed response, response.status_code: "+str(response.status_code)+", error:"+response+"\n")
 	print("Successfully imported "+str(len(records)-len(failedRecords))+" of "+str(len(records))+" records")
 	if len(failedRecords)>0:
-		print("[DEBUG] Failed to import "+str(len(failedRecords))+" records: "+json.dumps(failedRecords,indent=4)+"\n")	
+		print("[DEBUG] Failed to import "+str(len(failedRecords))+", please check the log file for details.\n")	
 
 if __name__ == '__main__':
 	run()

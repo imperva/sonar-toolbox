@@ -1,3 +1,9 @@
+"""
+Author: Brian Anderson
+Script Version: 1.1
+Description: Library for bulk deletion of dsf assets from a csv file
+"""
+
 #!/usr/bin/env python
 #/imperva/apps/jsonar/apps/4.x.x/bin/python3
 import os
@@ -40,20 +46,23 @@ def run():
 	failedRecords = []
 	logging.warning("====================  Starting deleting data sources from CSV by asset_id  ====================")
 	logging.warning("Deleting records from CSV file: "+CSV_FILE_PATH+"\n")
-	records = dsflib.parseCsv(CSV_FILE_PATH)
+	asset_ids = dsflib.parseCsvDelete(CSV_FILE_PATH)
 	logging.info("Processing CSV records: "+CSV_FILE_PATH+"\n")
-	for record in records:
-		logging.info("Deleting record with asset_id '"+record["data"]["assetData"]["asset_id"]+"'\n")
-		response = dsflib.makeCall(DSF_HOST + "/dsf/api/v1/data-sources/"+record["data"]["assetData"]["asset_id"], DSF_TOKEN, "DELETE")
+	for asset_id in asset_ids:
+		if "errors" in asset_id:
+			failedRecords.append(asset_id)
+			continue
+		logging.info("Deleting record with asset_id '"+asset_id+"'\n")
+		response = dsflib.makeCall(DSF_HOST + "/dsf/api/v1/data-sources/"+asset_id, DSF_TOKEN, "DELETE")
 		responseObj = response.json()
 		if response.status_code == 200 or response.status_code == 201:
-			logging.info("Successfully deleted record with asset_id '"+record["data"]["assetData"]["asset_id"]+"'.\n")
+			logging.info("Successfully deleted record with asset_id '"+asset_id+"'.\n")
 		else:
-			logging.warn("[WARN] Error in response, response.status_code: "+str(response.status_code)+", error:"+response+"\n")
-			failedRecords.append(record)
-	print("Successfully deleted "+str(len(records)-len(failedRecords))+" of "+str(len(records))+" records")
+			logging.error("[WARN] Error in response, response.status_code: "+str(response.status_code)+", response: "+json.dumps(responseObj)+"\n")
+			failedRecords.append(asset_id)
+	print("Successfully deleted "+str(len(asset_ids)-len(failedRecords))+" of "+str(len(asset_ids))+" records")
 	if len(failedRecords)>0:
-		print("[DEBUG] Failed to delete "+str(len(failedRecords))+" records: "+json.dumps(failedRecords,indent=4)+"\n")	
+		print("[DEBUG] Failed to delete "+str(len(failedRecords))+", please check the log file for details.\n\nRecords: "+json.dumps(failedRecords,indent=4)+"\n")
 
 if __name__ == '__main__':
 	run()

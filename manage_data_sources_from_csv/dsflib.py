@@ -1,3 +1,9 @@
+"""
+Author: Brian Anderson
+Script Version: 1.1
+Description: Library for dsf api calls and csv parsing
+"""
+
 import json
 import requests
 import base64
@@ -49,44 +55,91 @@ def parseCsv(CSV_FILE_PATH):
 	# Process each row into normalized data_source object
 	for row_num in range(len(rows[1:])):
 		is_ok = True
-		row_num_str = str(row_num+1)
 		row = rows[row_num+1]
-		dataSourceObj = {"data": {"assetData": {"connections":[]}}}
-		dataSourceObj["data"]["gatewayId"] = row[rowIndex["jsonar_uid"]].strip()
-		dataSourceObj["data"]["serverType"] = row[rowIndex["server_type"]].strip()
-		dataSourceObj["data"]["assetData"]["admin_email"] = row[rowIndex["admin_email"]].strip()
-		dataSourceObj["data"]["assetData"]["asset_id"] = row[rowIndex["asset_id"]].strip()
-		dataSourceObj["data"]["assetData"]["asset_display_name"] = row[rowIndex["asset_display_name"]].strip()
-		dataSourceObj["data"]["assetData"]["Server Host Name"] = row[rowIndex["server_host_name"]].strip()
-		dataSourceObj["data"]["assetData"]["Server IP"] = row[rowIndex["server_ip"]].strip()		
-		dataSourceObj["data"]["assetData"]["Server Port"] = int(row[rowIndex["server_port"]].strip())
-		dataSourceObj["data"]["assetData"]["Service Name"] = row[rowIndex["service_name"]].strip()
-		dataSourceObj["data"]["assetData"]["version"] = float(row[rowIndex["version"]].strip())
-		auth_mechanism = row[rowIndex["auth_mechanism"]].strip()
-		if auth_mechanism in authMechanisms:
-			match auth_mechanism:
-				case "password":
-					dataSourceObj["data"]["assetData"]["connections"].append({
-						"connectionData": {
-							"auth_mechanism": auth_mechanism.strip(),
-							"username": row[rowIndex["username"]].strip(), 
-							"password": row[rowIndex["password"]].strip()
-						},
-						"reason": row[rowIndex["reason"]].strip()
-					})
-				case "kerberos":
-					dataSourceObj["data"]["assetData"]["connections"].append({
-						"connectionData": {
-							"auth_mechanism": auth_mechanism.strip(),
-						},
-						"reason": row[rowIndex["reason"]].strip()
-					})
-			records.append(dataSourceObj)
+		if checkRow(row,requiredFields,rowIndex,row_num):
+			dataSourceObj = {"data": {"assetData": {"connections":[]}}}
+			dataSourceObj["data"]["gatewayId"] = row[rowIndex["jsonar_uid"]].strip()
+			dataSourceObj["data"]["serverType"] = row[rowIndex["server_type"]].strip()
+			dataSourceObj["data"]["assetData"]["admin_email"] = row[rowIndex["admin_email"]].strip()
+			dataSourceObj["data"]["assetData"]["asset_id"] = row[rowIndex["asset_id"]].strip()
+			dataSourceObj["data"]["assetData"]["asset_display_name"] = row[rowIndex["asset_display_name"]].strip()
+			dataSourceObj["data"]["assetData"]["Server Host Name"] = row[rowIndex["server_host_name"]].strip()
+			dataSourceObj["data"]["assetData"]["Server IP"] = row[rowIndex["server_ip"]].strip()		
+			dataSourceObj["data"]["assetData"]["Server Port"] = int(row[rowIndex["server_port"]].strip()) if can_int(row[rowIndex["server_port"]].strip()) else 0
+			dataSourceObj["data"]["assetData"]["Service Name"] = row[rowIndex["service_name"]].strip()
+			dataSourceObj["data"]["assetData"]["version"] = float(row[rowIndex["version"]].strip()) if can_float(row[rowIndex["version"]].strip()) else 0
+			auth_mechanism = row[rowIndex["auth_mechanism"]].strip()
+			if auth_mechanism in authMechanisms:
+				match auth_mechanism:
+					case "password":
+						dataSourceObj["data"]["assetData"]["connections"].append({
+							"connectionData": {
+								"auth_mechanism": auth_mechanism.strip(),
+								"username": row[rowIndex["username"]].strip(), 
+								"password": row[rowIndex["password"]].strip()
+							},
+							"reason": row[rowIndex["reason"]].strip()
+						})
+					case "kerberos":
+						dataSourceObj["data"]["assetData"]["connections"].append({
+							"connectionData": {
+								"auth_mechanism": auth_mechanism.strip(),
+							},
+							"reason": row[rowIndex["reason"]].strip()
+						})
+				records.append(dataSourceObj)
+			else:
+				records.append({"errors":True,"row_num":str(row_num+1)})
+				# print("Invalid input on row "+str(row_num+1)+" - auth_mechanism '"+auth_mechanism+"' is not supported, ignoring row.")
+				logging.info("Invalid input on row "+str(row_num+1)+" - auth_mechanism '"+auth_mechanism+"' is not supported, ignoring row.")
 		else:
-			print("Invalid input on row "+str(row_num+2)+" - auth_mechanism '"+auth_mechanism+"' is not supported, ignoring row.")
-			logging.info("Invalid input on row "+str(row_num+2)+" - auth_mechanism '"+auth_mechanism+"' is not supported, ignoring row.")
+			records.append({"errors":True,"row_num":str(row_num+1)})
 	return(records)
 
+
+def parseCsvDelete(CSV_FILE_PATH):
+	records = []
+	rowIndex = {}
+	f = open(CSV_FILE_PATH, 'r')
+	csvfile = f.read().split("\n")
+	rows = list(csv.reader(csvfile, quotechar='"', delimiter=',', quoting=csv.QUOTE_ALL, skipinitialspace=True))
+
+	# Parse csv headers by name/index order into associative lookup to support csv data in different column order
+	for i in range(len(rows[0])):
+		if (rows[0][i].strip()!=""):
+			rowIndex[rows[0][i].lower().replace(" ","_").replace('\ufeff', '')] = i
+	# Process each row into normalized data_source object
+	for row_num in range(len(rows[1:])):
+		row = rows[row_num+1]
+		if len(row)>0:
+			if 0 <= int(rowIndex["asset_id"]) < len(row): 
+				if row[rowIndex["asset_id"]]!= "":
+					records.append(row[rowIndex["asset_id"]].strip())
+				else:
+					records.append({"errors":True,"row_num":str(row_num+1)})
+		else:
+			records.append({"errors":True,"row_num":str(row_num+1)})
+	return(records)	
+
+def checkRow(row,requiredFields,rowIndex,row_num):
+	row_ok = True
+	missingFields = []
+	for field in requiredFields:
+		if not 0 <= int(rowIndex[field]) < len(row): 
+			row_ok = False
+			missingFields.append(field)
+		else:
+			if (field=="username" or field=="password"):
+				if row[rowIndex[field]].strip() == "" and row[rowIndex["auth_mechanism"]].strip() == "password":
+					row_ok = False
+					missingFields.append(field)
+			elif row[rowIndex[field]].strip() == "":
+				row_ok = False
+				missingFields.append(field)
+	if len(missingFields)>0:
+		# print("Missing required field(s) '"+",".join(missingFields)+"' in row "+str(row_num+1)+", ignoring row.")
+		logging.info("Missing required field(s) '"+",".join(missingFields)+"' in row "+str(row_num+1)+", ignoring row.")
+	return row_ok
 
 def makeCall(url, dsf_token, method="GET", data=None):
 	urllib3.disable_warnings()
@@ -142,3 +195,17 @@ def sortObject(sourceObj):
 	objSortedKeys.sort()
 	sourceObj = {i: sourceObj[i] for i in objSortedKeys}
 	return(sourceObj)
+
+def can_int(value):
+    try:
+        int_value = int(value)
+        return True
+    except ValueError:
+        return False
+	
+def can_float(value):
+    try:
+        float_value = float(value)
+        return True
+    except ValueError:
+        return False
