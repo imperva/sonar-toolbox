@@ -68,7 +68,7 @@ def run():
 					failedRecords.append(record)
 					logging.error("[ERROR] Failed to create record with asset_id '"+record["data"]["assetData"]["asset_id"]+"', response.status_code: "+str(response.status_code)+", error:"+json.dumps(responseObj)+"\n")
 			else:
-				logging.error("[DEBUG] Malformed response, response.status_code: "+str(response.status_code)+", error:"+response+"\n")
+				logging.error("[DEBUG] Malformed response, response.status_code: "+str(response.status_code)+", error:"+json.dumps(responseObj)+"\n")
 	print("Successfully imported "+str(len(records)-len(failedRecords))+" of "+str(len(records))+" records")
 	if len(failedRecords)>0:
 		print("[DEBUG] Failed to import "+str(len(failedRecords))+", please check the log file for details.\n")	
